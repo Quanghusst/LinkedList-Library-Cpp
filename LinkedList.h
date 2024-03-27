@@ -1,21 +1,21 @@
 #pragma once
-
+/*
+	
+*/
 template <class TValue>
 class Node {
 public:
 	TValue info;
 	Node * next;
 public:
-	Node (TValue info){next = nullptr;this->info = info;}
+	Node (TValue info) : info(info), next(nullptr){}
 };
 template <class TValue>
 class LinkedList{
 	typedef Node<TValue> * PNode;
 	PNode head;
 public:
-	LinkedList (){
-		head = nullptr;
-	}
+	LinkedList (): head(nullptr){}
 	~LinkedList (){
 		while (head != nullptr)
 		{
@@ -96,14 +96,15 @@ public:
 		current->next = current->next->next;
 		delete tmp;
 	}
-	void Traverse() const {
-		PNode current = head;
-		while (current != nullptr)
+	friend std::ostream &operator << (std::ostream &out, const LinkedList &h)
+	{
+		PNode current = h.head;
+		while (!current)
 		{
-			std::cout << current->info << '\t';
+			out << current->info << '\n';
 			current = current->next;
 		}
-		std::cout << std::endl;
+		return out;
 	}
 	TValue& operator[] (int index){
 		if (index >= size() || index < 0)

@@ -74,7 +74,7 @@ public:
 	}
 	void insertBefore(PNode current_node, TValue value){
 		if(isEmpty()) return;
-		if (current_node = head)
+		if (current_node == head)
 		{
 			pushFront(value);
 			return;

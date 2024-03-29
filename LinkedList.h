@@ -17,6 +17,10 @@ class LinkedList{
 public:
 	LinkedList (): head(nullptr){}
 	~LinkedList (){
+		clear();
+	}
+	bool isEmpty () const {return head == nullptr;}
+	void clear(){
 		while (head != nullptr)
 		{
 			PNode tmp = head;
@@ -24,7 +28,6 @@ public:
 			delete tmp;
 		}
 	}
-	bool isEmpty () const {return head == nullptr;}
 	int size () const {
 		int count = 0;
 		PNode current = head;
@@ -55,24 +58,36 @@ public:
 		}
 		current->next = new_node;
 	}
-	void insertAfter(int index, TValue value){
-		PNode new_node = new Node(value);
+	PNode getNodeAt(unsigned int index) const{
 		PNode current = head;
 		for (int i = 0; i < index; i++)
 		{
 			current = current->next;
 		}
-		new_node->next = current->next;
-		current->next = new_node;
+		return current;
 	}
-	void insertBefore(int index, TValue value){
+	void insertAfter(PNode current_node, TValue value){
+		if(isEmpty()) return;
 		PNode new_node = new Node(value);
+		new_node->next = current_node->next;
+		current_node->next = new_node;
+	}
+	void insertBefore(PNode current_node, TValue value){
+		if(isEmpty()) return;
+		if (current_node = head)
+		{
+			pushFront(value);
+			return;
+		}
+		PNode new_node = new Node(value);
+		
 		PNode current = head;
-		for (int i = 0; i < index - 1; i++)
+		while (current->next != current_node)
 		{
 			current = current->next;
 		}
-		new_node->next = current->next;
+		
+		new_node->next = current_node;
 		current->next = new_node;
 	}
 	void deleteAt(int index){
@@ -98,12 +113,20 @@ public:
 	}
 	friend std::ostream &operator << (std::ostream &out, const LinkedList &h)
 	{
-		PNode current = h.head;
-		while (!current)
+		// Vì h là 1 hằng nên các phương thức trong đó cũng phải là hàm hằng
+		// int size() const;
+		// PNode getNodeAt(unsigned int index) const;
+		if (h.isEmpty())// cương lĩnh chính trị của đảng
 		{
-			out << current->info << '\n';
-			current = current->next;
+			out << "nullptr\n";
+			return out;
 		}
+		
+		for (int i = 0; i < h.size(); i++)
+		{
+			out << h.getNodeAt(i)->info << '\n';
+		}
+		
 		return out;
 	}
 	TValue& operator[] (int index){

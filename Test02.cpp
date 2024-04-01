@@ -1,18 +1,21 @@
 #include <iostream>
-#include "LinkedList.h"
+#include "D:\0.C++\ThuVienTaoSan\DoublelyLinkedList.h"
 using namespace std;
 
 int main () 
 {
-    LinkedList<int> arr;
-    for (int i = 0; i < 5; i++)
+    DLinkedList<int> arr;
+    for (int i = 0; i < 5 ; i++)
     {
-        arr.pushFront(i+1);
+        arr.pushBack(i+1);
     }
     cout << arr << endl;
-    cout << "==========\n";
-    arr.insertBefore(arr.getNodeAt(0), 100);
-    cout << arr << endl;
-
+	
+	LinkedList<int> arr1;
+    for (int i = 0; i < 5 ; i++)
+    {
+        arr1.pushBack(i+1);
+    }
+    cout << arr1 << endl;
     return 0;
 }
